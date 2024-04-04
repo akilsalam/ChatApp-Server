@@ -73,7 +73,10 @@ io.on("connection", (socket) => {
         });
     });
 
-    
+    socket.on('delete message', (messageId) => {
+        // Broadcast the deleted message ID to other clients
+        socket.broadcast.emit('message deleted', messageId);
+    });
 
     socket.on("disconnect", () => {
         console.log("User disconnected");
@@ -88,3 +91,4 @@ io.on("connection", (socket) => {
         io.emit('user online', onlineUsers);
     });
 });
+

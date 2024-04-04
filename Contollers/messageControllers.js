@@ -19,7 +19,7 @@ const sendMessage = async (req, res) => {
 
     try {
         var message = await Message.create(newMessage);
-
+        console.log("hello");
         message = await message.populate("sender","name pic");
         message = await message.populate("chat");
         message = await User.populate(message,{
@@ -55,4 +55,27 @@ const allMessages = async (req,res) => {
     }
 };
 
-module.exports = { sendMessage,allMessages };
+const editMessage = async (req, res) => {
+    const { messageId } = req.params;
+
+    try {
+        // Find the message by ID and update its content
+        const message = await Message.findByIdAndUpdate(
+            messageId,
+            { content: "This Message was Deleted" },
+            { new: true }
+        );
+
+        if (!message) {
+            return res.status(404).json({ error: 'Message not found' });
+        }
+
+        res.json(message);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+
+module.exports = { sendMessage,allMessages,editMessage };
