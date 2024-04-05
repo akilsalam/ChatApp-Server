@@ -8,8 +8,8 @@ const messageSchema = mongoose.Schema(
         },
         content: {
             type: String, 
-            maxlength: Number.MAX_SAFE_INTEGER, // Set to a very large value
-            trim: true,
+            maxlength: 1000000000000, // Set to a very large value
+            // trim: true,
         },
         chat: {
             type: mongoose.Schema.Types.ObjectId,
@@ -18,6 +18,9 @@ const messageSchema = mongoose.Schema(
         isImage: {
             type: Boolean,
             default: false
+        },
+        imageData: {
+            type: String // Store base64 data of the image
         }
     },
     {

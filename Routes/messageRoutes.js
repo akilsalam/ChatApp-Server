@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.route('/').post(protect, sendMessage);
 router.route('/:chatId').get(protect, allMessages);
-router.route('/:messageId').put(editMessage); // Corrected route definition
+router.route('/:messageId').put(editMessage);
 
 module.exports = router;

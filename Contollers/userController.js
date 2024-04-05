@@ -6,23 +6,24 @@ const registerUser = async(req,res) => {
 
     if(!name || !email || !password) {
         res.status(400);
-        throw new Error("Please Enter all the Feilds")
+        res.json({ success: false, message: 'Please Enter All the Fields' });
 
     }
     const userExists = await User.findOne({email})
     
     if(userExists) {
         res.status(400);
-        throw new Error("User already exists")
-    }
+        res.json({ success: false, message: 'User Already Exist' });
+    }else{
 
-    const user = await User.create({
+        
+        const user = await User.create({
         name,
         email,
         password,
         pic
     })
-
+    
     if(user) {
         res.status(201).json({
             _id: user._id,
@@ -32,9 +33,10 @@ const registerUser = async(req,res) => {
             token: generateToken(user._id)
         })
     } else{
-        res.status(400);
-        throw new Error("User Not Found")
+        res.status(401);
+        res.json({ success: false, message: 'User Not Found' });
     }
+}
 }
 
 const authUser = async (req,res) => {
@@ -52,7 +54,7 @@ const authUser = async (req,res) => {
         });
     }else{
         res.status(401);
-        throw new Error("Invalid Email or Password")
+        res.json({ success: false, message: 'Invalid UserName or Password😔' });
     }
 }
 
