@@ -8,7 +8,7 @@ const messageSchema = mongoose.Schema(
         },
         content: {
             type: String, 
-            maxlength: 1000000000000, // Set to a very large value
+            maxlength: 1000000000000000, // Set to a very large value
             // trim: true,
         },
         chat: {
