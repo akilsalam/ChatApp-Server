@@ -7,7 +7,8 @@ const messageSchema = mongoose.Schema(
             ref: "User"
         },
         content: {
-            type: String,
+            type: String, 
+            maxlength: Number.MAX_SAFE_INTEGER, // Set to a very large value
             trim: true,
         },
         chat: {
@@ -17,9 +18,6 @@ const messageSchema = mongoose.Schema(
         isImage: {
             type: Boolean,
             default: false
-        },
-        imageData: {
-            type: String // Store base64 data of the image
         }
     },
     {
