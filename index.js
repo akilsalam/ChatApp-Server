@@ -6,12 +6,18 @@ const userRoutes = require("./Routes/userRoutes");
 const chatRoutes = require("./Routes/chatRoutes");
 const messageRoutes = require("./Routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddileware");
+const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload')
 
-const app = express();
 dotenv.config();
 connectDB();
+
+const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req,res) => {
     res.send("API is Running");
@@ -20,7 +26,6 @@ app.get("/", (req,res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/message', messageRoutes);
-
 
 app.use(notFound);
 app.use(errorHandler);
@@ -91,4 +96,3 @@ io.on("connection", (socket) => {
         io.emit('user online', onlineUsers);
     });
 });
-
